@@ -8,7 +8,7 @@ export default function Home() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const mailgun = new Mailgun(formData);
-  const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY || "4e5df0bdafebe6ab7d5203b56dcba1ba-a2dd40a3-b7d54eab"});
+  const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY});
 
  const data = {
     from: "Mailgun",
