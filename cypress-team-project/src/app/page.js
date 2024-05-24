@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-const formData = require('form-data');
+import formData from 'form-data';
 import Mailgun from 'mailgun.js';
 
 export default function Home() {
