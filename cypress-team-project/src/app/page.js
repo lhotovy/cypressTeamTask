@@ -1,21 +1,32 @@
 "use client";
 
 import { useState } from 'react';
+const formData = require('form-data');
+import Mailgun from 'mailgun.js';
 
 export default function Home() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const mailgun = new Mailgun(formData);
+  const mg = mailgun.client({username: 'api', key: process.env.MAILGUN_API_KEY || 'c692559ae25b45d24b5df2ba42e8ecaf-a2dd40a3-91b92e07'});
+
+ const data = {
+    from: "Mailgun",
+    to: "clonman9@gmail.com",
+    subject: "Cypress task",
+    text: `${firstName} ${lastName} has submitted the form.`,
+  }
+
 
   // create a sibmit handler for the form to be called when Submit button is hit
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    console.log(`First name: ${firstName}, Last name: ${lastName}`);
+    mg.messages().send(data);  
   };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-stone-900">
-      <form className="flex flex-col border-2 border-white p-12 items-center">
+      <form className="flex flex-col border-2 border-white p-12 items-center" onSubmit={handleSubmit}>
         <div className="mb-10">
           <label htmlFor="first_name">Your first name:</label>
           <input type="text" id="first_name" className="block mb-6 p-1 text-slate-900" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
